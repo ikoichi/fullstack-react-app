@@ -32,7 +32,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const updatedData: TodoUpdate = {}
     if (title) updatedData.title = title
-    if (isCompleted) updatedData.isCompleted = isCompleted
+    if (isCompleted !== undefined) updatedData.isCompleted = isCompleted
 
     const id: string = pid.toString()
     const todo = await prisma.todo.update({
@@ -44,7 +44,13 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === "DELETE") {
-    return res.json({})
+    const { pid } = req.query
+    const id: string = pid.toString()
+    const todo = await prisma.todo.delete({
+      where: { id },
+    })
+
+    return res.json(todo)
   }
 }
 

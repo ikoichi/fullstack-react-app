@@ -1,17 +1,20 @@
 import React, { ReactElement } from "react"
 import { Todo } from ".prisma/client"
-import { Checkbox, Flex, Heading, Input } from "@chakra-ui/react"
+import { Checkbox, Flex, Heading, IconButton, Input } from "@chakra-ui/react"
+import { DeleteIcon } from "@chakra-ui/icons"
 
 type TodosProps = {
   todos: Todo[]
   onTodoBlur: (todoId: string, newTitle: string) => Promise<void>
   onTodoCompleteToggle: (todoId: string, isCompleted: boolean) => Promise<void>
+  onTodoDelete: (todoId: string) => Promise<void>
 }
 
 export const Todos: React.FC<TodosProps> = ({
   todos,
   onTodoBlur,
   onTodoCompleteToggle,
+  onTodoDelete,
 }) => {
   return (
     <>
@@ -19,7 +22,7 @@ export const Todos: React.FC<TodosProps> = ({
         Todos
       </Heading>
       {todos.map((todo) => (
-        <Flex key={todo.id} my="4px">
+        <Flex key={todo.id} my="4px" role="group">
           <Input
             defaultValue={todo.title}
             variant="unstyled"
@@ -36,6 +39,18 @@ export const Todos: React.FC<TodosProps> = ({
           <Checkbox
             isChecked={todo.isCompleted}
             onChange={(e) => onTodoCompleteToggle(todo.id, e.target.checked)}
+          />
+          <IconButton
+            icon={<DeleteIcon />}
+            aria-label="Delete todo"
+            variant="ghost"
+            colorScheme="red"
+            size="sm"
+            onClick={() => onTodoDelete(todo.id)}
+            ml="8px"
+            opacity={0}
+            visibility={todo.isCompleted ? "hidden" : "visible"}
+            _groupHover={{ opacity: 1 }}
           />
         </Flex>
       ))}

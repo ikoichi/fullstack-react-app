@@ -32,11 +32,18 @@ export const TodosContainer: React.FC<TodosContainerProps> = ({
       .finally(() => setCompleteTodoToken(Math.random().toString()))
   }
 
+  const onTodoDelete = async (todoId: string) => {
+    axios
+      .delete(`/api/todo/${todoId}`)
+      .finally(() => setCompleteTodoToken(Math.random().toString()))
+  }
+
   return (
     <Todos
       todos={todos}
       onTodoBlur={onTodoBlur}
       onTodoCompleteToggle={onTodoCompleteToggle}
+      onTodoDelete={onTodoDelete}
     />
   )
 }
