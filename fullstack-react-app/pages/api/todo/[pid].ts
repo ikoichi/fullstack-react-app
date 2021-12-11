@@ -6,6 +6,11 @@ import { UserSession } from "../auth/[...nextauth]"
 
 const prisma = new PrismaClient()
 
+type TodoUpdate = {
+  title?: string
+  isCompleted?: boolean
+}
+
 // PUT /api/todo/:id -> update todo
 // DELETE /api/todo/:id -> delete todo
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,22 +27,23 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === "PUT") {
-    // PUT /api/todo/:id -> update todo
     const { pid } = req.query
-    const { title } = req.body
+    const { title, isCompleted } = req.body
+
+    const updatedData: TodoUpdate = {}
+    if (title) updatedData.title = title
+    if (isCompleted) updatedData.isCompleted = isCompleted
 
     const id: string = pid.toString()
     const todo = await prisma.todo.update({
       where: { id },
-      data: { title },
+      data: updatedData,
     })
 
     return res.json(todo)
   }
 
   if (req.method === "DELETE") {
-    // DELETE /api/todo/:id -> delete todo
-
     return res.json({})
   }
 }
