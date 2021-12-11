@@ -1,14 +1,20 @@
 import { Button, Center, Container, Flex, Text } from "@chakra-ui/react"
+import { GetServerSideProps, NextApiRequest, NextApiResponse } from "next"
 import { getSession, signOut } from "next-auth/react"
 import React from "react"
+import { Todos } from "../components/organisms/Todos/Todos"
+import { TodosContainer } from "../components/organisms/Todos/TodosContainer"
+import { UserSession } from "./api/auth/[...nextauth]"
 
-function LoggedPage({ session }) {
+function LoggedPage({ session }: { session: UserSession }) {
   return (
     <Container py="64px">
       <Center>
         <Flex flexDirection="column">
-          <Text mb="24px">👋 Welcome back {session.user.name}</Text>
+          <Text mb="24px">👋 Welcome back {session?.user?.name}</Text>
           <Button onClick={() => signOut()}>Log out</Button>
+
+          <TodosContainer />
         </Flex>
       </Center>
     </Container>
@@ -17,8 +23,7 @@ function LoggedPage({ session }) {
 
 export default LoggedPage
 
-export async function getServerSideProps({ req, res }) {
-  // is the current user logged or not? authenticated?
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
 
   if (!session) {
