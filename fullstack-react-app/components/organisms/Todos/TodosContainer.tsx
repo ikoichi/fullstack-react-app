@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { Todos } from "./Todos"
 
@@ -7,12 +8,22 @@ const fetchTodos = async () => {
   return data
 }
 
-export const TodosContainer = () => {
+type TodosContainerProps = {
+  refreshTodoToken: string
+}
+
+export const TodosContainer: React.FC<TodosContainerProps> = ({
+  refreshTodoToken,
+}) => {
   const [todos, setTodos] = useState([])
 
   useEffect(() => {
     fetchTodos().then((todos) => setTodos(todos))
-  }, [])
+  }, [refreshTodoToken])
 
-  return <Todos todos={todos} />
+  const onTodoBlur = async (todoId: string, newTitle: string) => {
+    axios.put(`/api/todo/${todoId}`, { title: newTitle })
+  }
+
+  return <Todos todos={todos} onTodoBlur={onTodoBlur} />
 }
