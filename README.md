@@ -8,8 +8,8 @@ Full-stack React application
 * ChakraUI React components
 * Landing page
 
-* Database -> PostreSQL (relational DB) Heroku
+* Database -> PostgreSQL (relational DB) Heroku
+* NextAuth
 * Prisma ORM
-* Authentication NextAuth -> Twitter single sing-on
 * BE RESTful endpoints
 
