@@ -11,5 +11,10 @@ Full-stack React application
 * Database -> PostgreSQL (relational DB) Heroku
 * NextAuth
 * Prisma ORM
-* BE RESTful endpoints
+* RESTful API
+      * GET /api/todos -> all the todos of the current user
+      * POST /api/todo -> create a new todo
+      * PUT /api/todo/:id -> update an existing todo
+      * DELETE /api/todo/:id -> delete an existing todo
+
 
