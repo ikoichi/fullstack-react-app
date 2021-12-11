@@ -7,6 +7,7 @@ import { Hero } from "../components/molecules/Hero/Hero"
 import { TopBar } from "../components/organisms/TopBar/TopBar"
 import { LandingBody } from "../components/organisms/LandingBody/LandingBody"
 import { LandingFooter } from "../components/organisms/LandingFooter/LandingFooter"
+import { getSession } from "next-auth/react"
 
 const Home: NextPage = () => {
   return (
@@ -28,3 +29,20 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/logged",
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
