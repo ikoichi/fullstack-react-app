@@ -3,8 +3,6 @@ Fullstack React App
 
 Full-stack React application
 
-Demo URL: https://fullstack-react-app.vercel.app/
-
 YouTube video of the livecoding: https://www.youtube.com/watch?v=29LwC_6PHac
 
 * Next.js App + TypeScript support
