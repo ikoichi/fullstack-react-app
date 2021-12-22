@@ -1,7 +1,6 @@
 # fullstack-react-app
-Fullstack React App
 
-Full-stack React application
+Full-stack React App
 
 YouTube video of the livecoding: https://www.youtube.com/watch?v=29LwC_6PHac
 
